@@ -33,8 +33,9 @@ COPY --from=publish /app/EdFi.Ods.AdminApi .
 
 COPY ./Application/EdFi.Ods.AdminApi/Docker/dev/run.sh /app/run.sh
 COPY ./Application/EdFi.Ods.AdminApi/Docker/dev/log4net.config /app/log4net.txt
+COPY ./Application/EdFi.Ods.AdminApi/Docker/dev/E2ETests-DataSeed.sql /app/DBSeed/E2ETests-DataSeed.sql
 
-RUN apk --no-cache add curl=~8 dos2unix=~7 bash=~5 gettext=~0 icu=~72 gcompat && \
+RUN apk --no-cache add curl=~8 dos2unix=~7 bash=~5 gettext=~0 icu=~72 gcompat postgresql15-client=~15 && \
     cp /app/log4net.txt /app/log4net.config && \
     dos2unix /app/*.json && \
     dos2unix /app/*.sh && \
