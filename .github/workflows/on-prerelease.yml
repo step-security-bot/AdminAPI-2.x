@@ -264,6 +264,8 @@ jobs:
              # Remove Pre-Release prefix 
              PREFIX="Pre-Release-"
              PACKAGEVERSION=${REF#"$PREFIX"}
+          else
+             PACKAGEVERSION=${REF}
           fi
 
           if [[ $PACKAGEVERSION =~ "alpha" ]]
