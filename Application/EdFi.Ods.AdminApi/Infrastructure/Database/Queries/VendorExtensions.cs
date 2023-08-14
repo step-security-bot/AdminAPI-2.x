@@ -10,14 +10,14 @@ namespace EdFi.Ods.AdminApi.Infrastructure.Database.Queries;
 
 public static class VendorExtensions
 {
-    public static readonly string[] ReservedNames =
+    public static readonly string[] _reservedNames =
     {
         Constants.VendorName
     };
 
     public static bool IsSystemReservedVendorName(string? vendorName)
     {
-        return ReservedNames.Contains(vendorName?.Trim());
+        return _reservedNames.Contains(vendorName?.Trim());
     }
 
     public static bool IsSystemReservedVendor(this Vendor vendor)

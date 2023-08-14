@@ -45,19 +45,19 @@ public class EditResourceOnClaimSetCommand
 
         foreach (var claimSetResourceClaim in resourceClaimsToEdit)
         {
-            if (claimSetResourceClaim.Action.ActionName == Action.Create.Value && !modelResourceClaim.Create)
+            if (claimSetResourceClaim.Action.ActionName == Action._create.Value && !modelResourceClaim.Create)
             {
                 recordsToRemove.Add(claimSetResourceClaim);
             }
-            else if (claimSetResourceClaim.Action.ActionName == Action.Read.Value && !modelResourceClaim.Read)
+            else if (claimSetResourceClaim.Action.ActionName == Action._read.Value && !modelResourceClaim.Read)
             {
                 recordsToRemove.Add(claimSetResourceClaim);
             }
-            else if (claimSetResourceClaim.Action.ActionName == Action.Update.Value && !modelResourceClaim.Update)
+            else if (claimSetResourceClaim.Action.ActionName == Action._update.Value && !modelResourceClaim.Update)
             {
                 recordsToRemove.Add(claimSetResourceClaim);
             }
-            else if (claimSetResourceClaim.Action.ActionName == Action.Delete.Value && !modelResourceClaim.Delete)
+            else if (claimSetResourceClaim.Action.ActionName == Action._delete.Value && !modelResourceClaim.Delete)
             {
                 recordsToRemove.Add(claimSetResourceClaim);
             }
@@ -77,41 +77,41 @@ public class EditResourceOnClaimSetCommand
 
         var recordsToAdd = new List<ClaimSetResourceClaimAction>();
 
-        if (modelResourceClaim.Create && claimSetResourceClaimsToEdit.All(x => x.Action.ActionName != Action.Create.Value))
+        if (modelResourceClaim.Create && claimSetResourceClaimsToEdit.All(x => x.Action.ActionName != Action._create.Value))
         {
             recordsToAdd.Add(new ClaimSetResourceClaimAction
             {
-                Action = actionsFromDb.Single(x => x.ActionName == Action.Create.Value),
+                Action = actionsFromDb.Single(x => x.ActionName == Action._create.Value),
                 ClaimSet = claimSetToEdit,
                 ResourceClaim = resourceClaimFromDb
             });
         }
 
-        if (modelResourceClaim.Read && claimSetResourceClaimsToEdit.All(x => x.Action.ActionName != Action.Read.Value))
+        if (modelResourceClaim.Read && claimSetResourceClaimsToEdit.All(x => x.Action.ActionName != Action._read.Value))
         {
             recordsToAdd.Add(new ClaimSetResourceClaimAction
             {
-                Action = actionsFromDb.Single(x => x.ActionName == Action.Read.Value),
+                Action = actionsFromDb.Single(x => x.ActionName == Action._read.Value),
                 ClaimSet = claimSetToEdit,
                 ResourceClaim = resourceClaimFromDb
             });
         }
 
-        if (modelResourceClaim.Update && claimSetResourceClaimsToEdit.All(x => x.Action.ActionName != Action.Update.Value))
+        if (modelResourceClaim.Update && claimSetResourceClaimsToEdit.All(x => x.Action.ActionName != Action._update.Value))
         {
             recordsToAdd.Add(new ClaimSetResourceClaimAction
             {
-                Action = actionsFromDb.Single(x => x.ActionName == Action.Update.Value),
+                Action = actionsFromDb.Single(x => x.ActionName == Action._update.Value),
                 ClaimSet = claimSetToEdit,
                 ResourceClaim = resourceClaimFromDb
             });
         }
 
-        if (modelResourceClaim.Delete && claimSetResourceClaimsToEdit.All(x => x.Action.ActionName != Action.Delete.Value))
+        if (modelResourceClaim.Delete && claimSetResourceClaimsToEdit.All(x => x.Action.ActionName != Action._delete.Value))
         {
             recordsToAdd.Add(new ClaimSetResourceClaimAction
             {
-                Action = actionsFromDb.Single(x => x.ActionName == Action.Delete.Value),
+                Action = actionsFromDb.Single(x => x.ActionName == Action._delete.Value),
                 ClaimSet = claimSetToEdit,
                 ResourceClaim = resourceClaimFromDb
             });

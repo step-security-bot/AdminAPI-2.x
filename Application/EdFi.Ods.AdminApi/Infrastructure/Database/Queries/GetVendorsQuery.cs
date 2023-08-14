@@ -27,11 +27,11 @@ public class GetVendorsQuery : IGetVendorsQuery
 
     public List<Vendor> Execute()
     {
-        return _context.Vendors.OrderBy(v => v.VendorName).Where(v => !VendorExtensions.ReservedNames.Contains(v.VendorName.Trim())).ToList();
+        return _context.Vendors.OrderBy(v => v.VendorName).Where(v => !VendorExtensions._reservedNames.Contains(v.VendorName.Trim())).ToList();
     }
 
     public List<Vendor> Execute(int offset, int limit)
     {
-        return _context.Vendors.OrderBy(v => v.VendorName).Where(v => !VendorExtensions.ReservedNames.Contains(v.VendorName.Trim())).Skip(offset).Take(limit).ToList();
+        return _context.Vendors.OrderBy(v => v.VendorName).Where(v => !VendorExtensions._reservedNames.Contains(v.VendorName.Trim())).Skip(offset).Take(limit).ToList();
     }
 }

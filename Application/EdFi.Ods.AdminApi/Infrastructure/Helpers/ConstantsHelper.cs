@@ -17,7 +17,7 @@ public static class ConstantsHelpers
     /// <summary>
     /// Assembly version of the admin api.
     /// </summary>
-    public static readonly string Build = Assembly.GetExecutingAssembly()
+    public static readonly string _build = Assembly.GetExecutingAssembly()
         .GetName()
         .Version?.ToString() ?? Version;
 }

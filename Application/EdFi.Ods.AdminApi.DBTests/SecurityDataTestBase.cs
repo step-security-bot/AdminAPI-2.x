@@ -244,7 +244,7 @@ public abstract class SecurityDataTestBase : PlatformSecurityContextTestBase
             .Select(index => parentResourceClaims[index - 1]).Select(parentResource => new ClaimSetResourceClaimAction
             {
                 ResourceClaim = parentResource,
-                Action = actions.Single(x => x.ActionName == ActionName.Create.Value), ClaimSet = testClaimSet
+                Action = actions.Single(x => x.ActionName == ActionName._create.Value), ClaimSet = testClaimSet
             }).ToList();
 
         var childResources = parentResourceClaims.SelectMany(x => childResourceClaims
@@ -252,7 +252,7 @@ public abstract class SecurityDataTestBase : PlatformSecurityContextTestBase
             .Select(child => new ClaimSetResourceClaimAction
             {
                 ResourceClaim = child,
-                Action = actions.Single(a => a.ActionName == ActionName.Create.Value),
+                Action = actions.Single(a => a.ActionName == ActionName._create.Value),
                 ClaimSet = testClaimSet
             }).ToList()).ToList();
 

@@ -34,7 +34,7 @@ public class ReadClaimSets : IFeature
         foreach (var claimSet in model)
         {
             claimSet.Applications = mapper.Map<List<SimpleApplicationModel>>(getApplications.Execute(claimSet.Id));
-            claimSet.IsSystemReserved = Constants.DefaultClaimSets.Contains(claimSet.Name);
+            claimSet.IsSystemReserved = Constants._defaultClaimSets.Contains(claimSet.Name);
         }
         return Task.FromResult(Results.Ok(model));
     }

@@ -30,13 +30,13 @@ public static class AuthorizationStrategiesExtension
     public static AuthorizationStrategy?[] AddAuthorizationStrategyOverrides(this AuthorizationStrategy?[] authorizationStrategies,
         string actionName, AuthorizationStrategy? strategy)
     {
-        if (actionName == Action.Create.Value)
+        if (actionName == Action._create.Value)
             authorizationStrategies[0] = strategy;
-        else if (actionName == Action.Read.Value)
+        else if (actionName == Action._read.Value)
             authorizationStrategies[1] = strategy;
-        else if (actionName == Action.Update.Value)
+        else if (actionName == Action._update.Value)
             authorizationStrategies[2] = strategy;
-        else if (actionName == Action.Delete.Value)
+        else if (actionName == Action._delete.Value)
             authorizationStrategies[3] = strategy;
 
         return authorizationStrategies;

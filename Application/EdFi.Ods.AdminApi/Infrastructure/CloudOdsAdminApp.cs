@@ -13,13 +13,13 @@ public static class Constants
     public const string VendorNamespacePrefix = "http://ed-fi.org";
     public const string InternalAdminApiClaimSet = "Ed-Fi ODS Admin App";
 
-    public static readonly string[] SystemReservedClaimSets =
+    public static readonly string[] _systemReservedClaimSets =
     {
         InternalAdminApiClaimSet,
         "Bootstrap Descriptors and EdOrgs"
     };
 
-    public static readonly string[] DefaultClaimSets =
+    public static readonly string[] _defaultClaimSets =
     {
         "SIS Vendor",
         "Ed-Fi Sandbox",

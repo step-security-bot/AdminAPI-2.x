@@ -162,7 +162,7 @@ public class GetResourcesByClaimSetIdQueryTests : SecurityDataTestBase
         var testResourceClaim =
             testResourceClaims.Single(x => x.ClaimSet.ClaimSetId == testClaimSet.ClaimSetId && x.ResourceClaim.ResourceName == rcName).ResourceClaim;
         var testAuthStrategy = testAuthStrategies.Single(x =>
-            x.ResourceClaim.ResourceClaimId == testResourceClaim.ResourceClaimId && x.Action.ActionName == ActionName.Create.Value)
+            x.ResourceClaim.ResourceClaimId == testResourceClaim.ResourceClaimId && x.Action.ActionName == ActionName._create.Value)
         .AuthorizationStrategies.Single().AuthorizationStrategy;
 
         var result = SingleResourceClaimForClaimSet(testClaimSet.ClaimSetId, testResourceClaim.ResourceClaimId);
@@ -258,7 +258,7 @@ public class GetResourcesByClaimSetIdQueryTests : SecurityDataTestBase
                 };
                 var action = new Action
                 {
-                    ActionName = ActionName.Create.Value,
+                    ActionName = ActionName._create.Value,
                     ActionUri = "create"
                 };
                 var claimSetResourceClaim = new ClaimSetResourceClaimAction
@@ -312,7 +312,7 @@ public class GetResourcesByClaimSetIdQueryTests : SecurityDataTestBase
             {
                 var action = new Action
                 {
-                    ActionName = ActionName.Create.Value,
+                    ActionName = ActionName._create.Value,
                     ActionUri = "create"
                 };
                 var claimSetResourceClaim = new ClaimSetResourceClaimAction
@@ -335,7 +335,7 @@ public class GetResourcesByClaimSetIdQueryTests : SecurityDataTestBase
                 var parentResource = parentResourceClaims[index - 1];
                 var action = new Action
                 {
-                    ActionName = ActionName.Create.Value,
+                    ActionName = ActionName._create.Value,
                     ActionUri = "create"
                 };
                 var claimSetResourceClaim = new ClaimSetResourceClaimAction
