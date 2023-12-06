@@ -21,6 +21,7 @@ using FluentValidation;
 using EdFi.Ods.AdminApi.Infrastructure.MultiTenancy;
 using EdFi.Ods.AdminApi.Helpers;
 using EdFi.Ods.AdminApi.Infrastructure.Context;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace EdFi.Ods.AdminApi.Infrastructure;
 
@@ -33,6 +34,7 @@ public static class WebApplicationBuilderExtensions
         var executingAssembly = Assembly.GetExecutingAssembly();
         webApplicationBuilder.Services.AddAutoMapper(executingAssembly, typeof(AdminApiMappingProfile).Assembly);
         webApplicationBuilder.Services.AddScoped<InstanceContext>();
+        webApplicationBuilder.Services.AddScoped<OperationFilterContext>();
 
         foreach (var type in typeof(IMarkerForEdFiOdsAdminApiManagement).Assembly.GetTypes())
         {
@@ -91,7 +93,7 @@ public static class WebApplicationBuilderExtensions
                     {
                         ClientCredentials = new OpenApiOAuthFlow
                         {
-                            TokenUrl = new Uri($"{issuer}/{SecurityConstants.TokenEndpoint}"),
+                            TokenUrl = new Uri($"{issuer}/Tenant1/{SecurityConstants.TokenEndpoint}"),
                             Scopes = new Dictionary<string, string>
                             {
                                 { SecurityConstants.Scopes.AdminApiFullAccess, "Unrestricted access to all Admin API endpoints" },
@@ -117,7 +119,7 @@ public static class WebApplicationBuilderExtensions
                 }
             );
 
-            foreach (var version in AdminApiVersions.GetAllVersionStrings())
+            foreach (var version in new string[] { "Tenant1", "Tenant2" })//AdminApiVersions.GetAllVersionStrings())
             {
                 opt.SwaggerDoc(version, new OpenApiInfo
                 {

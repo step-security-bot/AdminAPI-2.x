@@ -18,8 +18,24 @@ public class TokenEndpointBodyDescriptionFilter : IOperationFilter
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
         var descriptor = context.ApiDescription.ActionDescriptor as ControllerActionDescriptor;
+
+        //var tenantName = context.DocumentName;
+        //if (tenantName != null)
+        //{
+        //    context.ApiDescription.ActionDescriptor.RouteValues.Add("tenantIdentifier", tenantName);
+        //}
         if (descriptor?.ControllerName != "Connect" || descriptor.ActionName != "Token")
             return;
+
+        //var tenantName = context.DocumentName;
+        //if (tenantName != null)
+        //{
+        //    context.ApiDescription.GroupName = tenantName;
+        //    //context.ApiDescription.RelativePath = context.ApiDescription.RelativePath.Replace("{tenantIdentifier}", tenantName);
+        //    var path = context.ApiDescription.RelativePath.Replace("{tenantIdentifier}", tenantName);
+        //    context.ApiDescription.ActionDescriptor.AttributeRouteInfo.Template = $"{path}";
+        //    context.ApiDescription.ActionDescriptor.RouteValues.Add("tenantIdentifier", tenantName);
+        //}
 
         operation.RequestBody ??= new OpenApiRequestBody();
         operation.RequestBody.Content = new Dictionary<string, OpenApiMediaType>

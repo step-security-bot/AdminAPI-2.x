@@ -23,7 +23,7 @@ public static class WebApplicationExtensions
         application.UseSwaggerUI(definitions =>
         {
             definitions.RoutePrefix = "swagger";
-            foreach (var version in versions)
+            foreach (var version in new string[] { "Tenant1", "Tenant2" })//versions)
             {
                 definitions.SwaggerEndpoint($"{version}/swagger.json", version);
             }

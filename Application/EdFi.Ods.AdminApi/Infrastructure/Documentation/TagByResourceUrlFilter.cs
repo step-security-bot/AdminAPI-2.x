@@ -19,7 +19,7 @@ public class TagByResourceUrlFilter : IOperationFilter
         if (urlParts.Length == 0)
             return;
 
-        var isVersionPart = new Regex("(v)\\d+");
+        var isVersionPart = new Regex("^[A-Za-z0-9-]+$");
         var resourceName = isVersionPart.IsMatch(urlParts[0])
             ? urlParts[1] : urlParts[0];
 

@@ -35,7 +35,7 @@ public static class SecurityExtensions
             {
                 opt.AllowClientCredentialsFlow();
 
-                opt.SetTokenEndpointUris(SecurityConstants.TokenEndpoint);
+                opt.SetTokenEndpointUris($"Tenant1/{SecurityConstants.TokenEndpoint}", $"Tenant2/{SecurityConstants.TokenEndpoint}");
 
                 opt.AddEphemeralEncryptionKey();
                 opt.AddEphemeralSigningKey();

@@ -47,7 +47,7 @@ public class AdminApiEndpointBuilder
         if (_route == null) throw new Exception("Invalid endpoint registration. Route must be specified");
         if (_handler == null) throw new Exception("Invalid endpoint registration. Handler must be specified");
 
-        foreach (var version in versions)
+        foreach (var version in new string[] {"Tenant1","Tenant2"})//versions)
         {
             if (version == null) throw new ArgumentException("Version cannot be null");
 

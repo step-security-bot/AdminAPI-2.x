@@ -20,6 +20,7 @@ public class ConnectController : Controller
 {
     private readonly ITokenService _tokenService;
     private readonly IRegisterService _registerService;
+    private const string TenantIdentifierRoutePrefix = @"{tenantIdentifier:regex(^[[A-Za-z0-9-]]+$)?}";
 
     public ConnectController(ITokenService tokenService, IRegisterService registerService)
     {
@@ -27,7 +28,10 @@ public class ConnectController : Controller
         _registerService = registerService;
     }
 
-    [HttpPost(SecurityConstants.RegisterEndpoint)]
+    //[HttpPost($"Tenant2/{SecurityConstants.RegisterEndpoint}")]
+    //[]
+    [Route($"{TenantIdentifierRoutePrefix}/{SecurityConstants.RegisterEndpoint}")]
+    [HttpPost]
     [Consumes("application/x-www-form-urlencoded"), Produces("application/json")]
     [SwaggerOperation("Registers new client", "Registers new client")]
     [SwaggerResponse(200, "Application registered successfully.")]
@@ -37,12 +41,15 @@ public class ConnectController : Controller
         return Ok(new { Title = message, Status = 200 });
     }
 
-    [HttpPost(SecurityConstants.TokenEndpoint)]
+    //[HttpPost($"Tenant2/{SecurityConstants.TokenEndpoint}")]
+    [Route($"{TenantIdentifierRoutePrefix}/{SecurityConstants.TokenEndpoint}")]
+    [HttpPost]
     [Consumes("application/x-www-form-urlencoded"), Produces("application/json")]
     [SwaggerOperation("Retrieves bearer token", "\nTo authenticate Swagger requests, execute using \"Authorize\" above, not \"Try It Out\" here.")]
     [SwaggerResponse(200, "Sign-in successful.")]
     public async Task<ActionResult> Token()
     {
+        var a = HttpContext.Features.Get<OpenIddictServerAspNetCoreFeature>()?.Transaction?.Request;
         var request = HttpContext.GetOpenIddictServerRequest() ?? throw new ValidationException("Failed to parse token request");
         var principal = await _tokenService.Handle(request);
 

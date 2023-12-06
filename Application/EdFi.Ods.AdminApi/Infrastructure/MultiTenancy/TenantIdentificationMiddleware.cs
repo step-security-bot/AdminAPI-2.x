@@ -8,6 +8,7 @@ using EdFi.Ods.AdminApi.Infrastructure.Context;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text.RegularExpressions;
 
 namespace EdFi.Ods.AdminApi.Infrastructure.MultiTenancy;
@@ -29,7 +30,6 @@ public class TenantResolverMiddleware : IMiddleware
         _tenantConfigurationContextProvider = tenantConfigurationContextProvider;
         _options = options;
         _swaggerOptions = swaggerOptions;
-
     }
 
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
