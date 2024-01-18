@@ -1,14 +1,3 @@
-\---
-
-confluence-id: 138647022
-
-confluence-space: %%CONFLUENCE-SPACE%%
-
-\---
-
-Admin API 1.1 - Installation
-============================
-
 Created by Jason Hoekstra on Jan 20, 2023
 
 This section contains installation guides for the Admin API.

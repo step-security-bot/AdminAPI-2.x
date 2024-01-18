@@ -1,14 +1,3 @@
-\---
-
-confluence-id: 133400012
-
-confluence-space: %%CONFLUENCE-SPACE%%
-
-\---
-
-Technical Information
-=====================
-
 Created by Jason Hoekstra, last modified by Ian Christopher \[Contractor\] \[X\] on Aug 19, 2022
 
 This section contains technical details regarding the Ed-Fi Admin API.

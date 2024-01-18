@@ -1,14 +1,3 @@
-\---
-
-confluence-id: 127929051
-
-confluence-space: %%CONFLUENCE-SPACE%%
-
-\---
-
-Admin API
-=========
-
 Created by Ian Christopher \[Contractor\] \[X\], last modified by Jason Hoekstra on Jan 17, 2024
 
 Latest Release

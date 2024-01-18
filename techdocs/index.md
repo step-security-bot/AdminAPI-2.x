@@ -1,14 +1,3 @@
-\---
-
-confluence-id:
-
-confluence-space: %%CONFLUENCE-SPACE%%
-
-\---
-
-ADMINAPI (Ed-Fi ODS / API Admin API)
-====================================
-
 |     |     |
 | --- | --- |
 | Key | ADMINAPI |

@@ -1,14 +1,3 @@
-\---
-
-confluence-id: 138647023
-
-confluence-space: %%CONFLUENCE-SPACE%%
-
-\---
-
-Admin API 1.1 - Admin API - Docker installation
-===============================================
-
 Created by Jason Hoekstra on Jan 20, 2023
 
 **Contents:**

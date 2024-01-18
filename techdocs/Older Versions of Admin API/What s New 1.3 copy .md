@@ -1,14 +1,3 @@
-\---
-
-confluence-id: 127929054
-
-confluence-space: %%CONFLUENCE-SPACE%%
-
-\---
-
-What's New (1.3 copy)
-=====================
-
 Created by Ian Christopher \[Contractor\] \[X\], last modified by Jason Hoekstra on Sep 19, 2023
 
 This section provides an overview of what's new in the latest versions of the Admin API.

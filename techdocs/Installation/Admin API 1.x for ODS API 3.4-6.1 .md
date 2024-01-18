@@ -1,14 +1,3 @@
-\---
-
-confluence-id: 170591048
-
-confluence-space: %%CONFLUENCE-SPACE%%
-
-\---
-
-Admin API 1.x (for ODS/API 3.4-6.1)
-===================================
-
 Created by Jason Hoekstra, last modified on Sep 18, 2023
 
 Below are pages that support the installation Admin API 1.x:

@@ -1,14 +1,3 @@
-\---
-
-confluence-id: 138646836
-
-confluence-space: %%CONFLUENCE-SPACE%%
-
-\---
-
-Installation
-============
-
 Created by Jason Hoekstra, last modified on Dec 04, 2023
 
 This section contains installation guides for the Admin API.

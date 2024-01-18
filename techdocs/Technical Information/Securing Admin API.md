@@ -1,14 +1,3 @@
-\---
-
-confluence-id: 133399675
-
-confluence-space: %%CONFLUENCE-SPACE%%
-
-\---
-
-Securing Admin API
-==================
-
 Created by Patrick McVeety-Mill, last modified by Jason Hoekstra on Oct 17, 2022
 
 The Ed-Fi ODS / API Admin API application is secured using internally managed clients and following the OAuth 2.0 "client credentials" specification designed for machine-to-machine communication (in other words, not for authenticating individual users).

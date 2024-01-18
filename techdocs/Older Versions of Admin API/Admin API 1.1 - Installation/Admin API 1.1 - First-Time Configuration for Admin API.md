@@ -1,14 +1,3 @@
-\---
-
-confluence-id: 138647052
-
-confluence-space: %%CONFLUENCE-SPACE%%
-
-\---
-
-Admin API 1.1 - First-Time Configuration for Admin API
-======================================================
-
 Created by Jason Hoekstra on Jan 20, 2023
 
 After [Installing the Admin API](Admin-API-1.1---Admin-API---Docker-installation_138647023.html), there are a couple manual steps that must be completed before the application can be used.

@@ -1,14 +1,3 @@
-\---
-
-confluence-id: 127929056
-
-confluence-space: %%CONFLUENCE-SPACE%%
-
-\---
-
-Getting Started
-===============
-
 Created by Ian Christopher \[Contractor\] \[X\], last modified by Jason Hoekstra on Sep 19, 2023
 
 This documentation outlines the steps necessary to deploy and set up the Ed-Fi ODS / API Admin API. The Admin API provides an API interface to perform common administrative tasks for an instance of an Ed-Fi ODS / API.

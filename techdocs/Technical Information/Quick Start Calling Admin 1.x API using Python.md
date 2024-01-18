@@ -1,14 +1,3 @@
-\---
-
-confluence-id: 138644968
-
-confluence-space: %%CONFLUENCE-SPACE%%
-
-\---
-
-Quick Start Calling Admin 1.x API using Python
-==============================================
-
 Created by Jason Hoekstra, last modified on Oct 04, 2023
 
 Overview

@@ -1,14 +1,3 @@
-\---
-
-confluence-id: 162202143
-
-confluence-space: %%CONFLUENCE-SPACE%%
-
-\---
-
-Endpoints in Admin API 2.x
-==========================
-
 Created by Jason Hoekstra, last modified by Stephen Fuqua on Nov 20, 2023
 
 Below are the endpoints and their request and response objects for v2.0 of the Ed-Fi ODS / API Admin API.

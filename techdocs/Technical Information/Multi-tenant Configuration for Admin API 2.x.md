@@ -1,14 +1,3 @@
-\---
-
-confluence-id: 186024307
-
-confluence-space: %%CONFLUENCE-SPACE%%
-
-\---
-
-Multi-tenant Configuration for Admin API 2.x
-============================================
-
 Created by Jason Hoekstra, last modified on Jan 16, 2024
 
 MultiTenancy can be enabled in the appsettings file by updating “MultiTenancy” flag to true.
