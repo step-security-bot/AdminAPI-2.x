@@ -1,0 +1,63 @@
+meta {
+  name: Register
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{API_URL}}/connect/register
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  ClientId: %7B%7Bclient_id%7D%7D
+  ClientSecret: %7B%7Bclient_secret%7D%7D
+  DisplayName: %7B%7Bclient_id%7D%7D
+}
+
+script:pre-request {
+  const { v4: uuidv4 } = require("uuid");
+  
+  function generateClientSecret() {
+      const minLength = 32;
+      const maxLength = 128;
+      let result = '';
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      const specialCharacters = '!@#$%^&*()_+{}:"<>?|[];\',./`~';
+      const length = Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength;
+  
+      result += randomChar('abcdefghijklmnopqrstuvwxyz');
+      result += randomChar('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+      result += randomChar('0123456789');
+      result += randomChar(specialCharacters);
+  
+      for (let i = result.length; i < length; i++) {
+          const charactersPlusSpecial = characters + specialCharacters;
+          result += charactersPlusSpecial.charAt(Math.floor(Math.random() * charactersPlusSpecial.length));
+      }
+  
+      return shuffleString(result);
+  }
+  
+  function randomChar(str) {
+      return str.charAt(Math.floor(Math.random() * str.length));
+  }
+  
+  function shuffleString(str) {
+      const array = str.split('');
+      for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array.join('');
+  }
+  
+  let guid = await uuidv4();
+  let client_secret =  generateClientSecret();
+  
+  await bru.setEnvVar("client_id",guid);
+  await bru.setEnvVar("client_secret", client_secret);
+  console.log(guid);
+  
+}

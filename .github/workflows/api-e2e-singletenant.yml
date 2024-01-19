@@ -62,13 +62,19 @@ jobs:
           node-version: "16"
 
       - name: Install Tools
-        run: npm install -g newman newman-reporter-htmlextra postman-combine-collections
+        run: |
+          npm install -g @usebruno/cli
+          npm install -g newman newman-reporter-htmlextra postman-combine-collections
 
       - name: Combine Collections
         run: |
           postman-combine-collections -f './E2E Tests/Admin API E2E 2.0 -*.postman_collection.json' \
              -n 'Admin API E2E 2.0' \
              -o './E2E Tests/Admin-API-Full-Collection.json'
+
+      - name: Run Bruno Tests
+        run: bru run --env 'Admin API Docker' --insecure
+        working-directory: ./Application/EdFi.Ods.AdminApi/E2E Tests/Bruno/Admin API E2E 2.0 - Actions
 
       - name: Run tests
         run: |
