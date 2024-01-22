@@ -14,6 +14,10 @@ auth:bearer {
   token: {{TOKEN}}
 }
 
+assert {
+  res.status: eq 200
+}
+
 tests {
   // pm.test("GET Actions: Status code is OK", function () {
   //     pm.response.to.have.status(200);

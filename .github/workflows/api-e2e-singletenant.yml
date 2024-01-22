@@ -73,7 +73,7 @@ jobs:
              -o './E2E Tests/Admin-API-Full-Collection.json'
 
       - name: Run Bruno Tests
-        run: bru run --env 'Admin API Docker' --insecure
+        run: bru run --env 'Admin API Docker' --insecure -r
         working-directory: ./Application/EdFi.Ods.AdminApi/E2E Tests/Bruno/Admin API E2E 2.0 - Actions
 
       - name: Run tests

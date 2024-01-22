@@ -10,14 +10,8 @@ post {
   auth: none
 }
 
-body:form-urlencoded {
-  ClientId: %7B%7Bclient_id%7D%7D
-  ClientSecret: %7B%7Bclient_secret%7D%7D
-  DisplayName: %7B%7Bclient_id%7D%7D
-}
-
 script:pre-request {
-  const { v4: uuidv4 } = require("uuid");
+  const { nanoid } = require("nanoid");
   
   function generateClientSecret() {
       const minLength = 32;
@@ -53,11 +47,18 @@ script:pre-request {
       return array.join('');
   }
   
-  let guid = await uuidv4();
-  let client_secret =  generateClientSecret();
+  const clientId = nanoid();
+  const clientSecret = generateClientSecret();
+  const displayName = "Test";
   
-  await bru.setEnvVar("client_id",guid);
-  await bru.setEnvVar("client_secret", client_secret);
-  console.log(guid);
+  req.setBody({
+    clientId,
+    clientSecret,
+    displayName
+  });
+  
+  bru.setEnvVar('ClientId', clientId);
+  bru.setEnvVar('ClientSecret', clientSecret);
+  console.log(clientId);
   
 }
