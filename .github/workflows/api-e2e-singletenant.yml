@@ -73,7 +73,7 @@ jobs:
              -o './E2E Tests/Admin-API-Full-Collection.json'
 
       - name: Run Bruno Tests
-        run: bru run --env 'Admin API Docker' --insecure -r
+        run: bru run --env 'Admin API Docker' --insecure -r -o '../bruno-results.xml' -f 'junit'
         working-directory: ./Application/EdFi.Ods.AdminApi/E2E Tests/Bruno/Admin API E2E 2.0 - Actions
 
       - name: Run tests
@@ -115,6 +115,14 @@ jobs:
         with:
           name: test-xml-results
           path: Application/EdFi.Ods.AdminApi/reports/report.xml
+          retention-days: 5
+
+      - name: Upload bruno results
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
+        if: success() || failure()
+        with:
+          name: bruno-xml-results
+          path: Application/EdFi.Ods.AdminApi/E2E Tests/Bruno/bruno-results.xml
           retention-days: 5
 
   report:
