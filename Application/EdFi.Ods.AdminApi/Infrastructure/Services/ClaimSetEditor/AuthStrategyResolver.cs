@@ -36,7 +36,7 @@ public class AuthStrategyResolver : IAuthStrategyResolver
                     {
                         foreach (var strategy in authStrategyOverride.AuthorizationStrategies)
                         {
-                            var authStrategy = dbAuthStrategies.SingleOrDefault(
+                            var authStrategy = dbAuthStrategies.AsEnumerable().SingleOrDefault(
                             x => x.AuthorizationStrategyName.Equals(
                                 strategy.AuthStrategyName,
                                 StringComparison.InvariantCultureIgnoreCase));

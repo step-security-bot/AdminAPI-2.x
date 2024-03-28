@@ -109,7 +109,7 @@ public class EditAuthStrategy : IFeature
                 var authStrategies = getAllAuthorizationStrategiesQuery.Execute();
                 foreach (var authStrategyName in overrideAuthStategyOnClaimSetRequest.AuthorizationStrategies!)
                 {
-                    var validAuthStrategyName = authStrategies
+                    var validAuthStrategyName = authStrategies.AsEnumerable()
                       .FirstOrDefault(a => a.AuthStrategyName!.ToLower() == authStrategyName!.ToLower());
 
                     if (validAuthStrategyName == null)
