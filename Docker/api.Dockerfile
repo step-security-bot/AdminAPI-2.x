@@ -7,7 +7,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0.3-alpine3.19-amd64@sha256:a531d9d123928514405b9da9ff28a3aa81bd6f7d7d8cfb6207b66c007e7b3075 as base
 ARG DB=pgsql
 
-RUN apk --no-cache add curl=~8 unzip=~6 dos2unix=~7 bash=~5 gettext=~0 jq=~1 icu=~72 && \
+RUN apk --no-cache add curl=~8 unzip=~6 dos2unix=~7 bash=~5 gettext=~0 jq=~1 icu=~74 && \
     if [ "$DB" = "pgsql" ]; then apk --no-cache add postgresql13-client=~13; fi && \
     addgroup -S edfi && adduser -S edfi -G edfi
 
