@@ -3,11 +3,13 @@
 // The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 // See the LICENSE and NOTICES files in the project root for more information.
 
+using System.Linq.Expressions;
 using EdFi.Admin.DataAccess.Contexts;
 using EdFi.Admin.DataAccess.Models;
 using EdFi.Ods.AdminApi.Helpers;
 using EdFi.Ods.AdminApi.Infrastructure;
 using EdFi.Ods.AdminApi.Infrastructure.Extensions;
+using EdFi.Ods.AdminApi.Infrastructure.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -23,7 +25,13 @@ public class GetVendorsQuery : IGetVendorsQuery
 {
     private readonly IUsersContext _context;
     private readonly IOptions<AppSettings> _options;
-
+    private static readonly Dictionary<string, Expression<Func<Vendor, object>>> _orderByColumnVendors =
+    new Dictionary<string, Expression<Func<Vendor, object>>>
+        (StringComparer.OrdinalIgnoreCase)
+    {
+        { "company", x => x.VendorName },
+        { "id", x => x.VendorId }
+    };
     public GetVendorsQuery(IUsersContext context, IOptions<AppSettings> options)
     {
         _context = context;
@@ -46,6 +54,8 @@ public class GetVendorsQuery : IGetVendorsQuery
 
     public List<Vendor> Execute(CommonQueryParams commonQueryParams, int? id, string? company, string? namespacePrefixes, string? contactName, string? contactEmailAddress)
     {
+        Expression<Func<Vendor, object>> columnToOrderBy = _orderByColumnVendors.GetColumnToOrderBy(commonQueryParams.OrderBy);
+
         return _context.Vendors
             .Where(c => id == null || id < 1 || c.VendorId == id)
             .Where(c => company == null || c.VendorName == company)
@@ -61,6 +71,7 @@ public class GetVendorsQuery : IGetVendorsQuery
             .Include(v => v.Users)
             .Include(v => v.VendorNamespacePrefixes)
             .Where(v => !VendorExtensions.ReservedNames.Contains(v.VendorName.Trim()))
+            .OrderByColumn(columnToOrderBy, commonQueryParams.IsDescending)
             .Paginate(commonQueryParams.Offset, commonQueryParams.Limit, _options)
             .ToList();
     }

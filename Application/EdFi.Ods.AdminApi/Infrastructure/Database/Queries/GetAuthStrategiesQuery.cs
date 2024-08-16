@@ -3,8 +3,10 @@
 // The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 // See the LICENSE and NOTICES files in the project root for more information.
 
+using System.Linq.Expressions;
 using EdFi.Ods.AdminApi.Helpers;
 using EdFi.Ods.AdminApi.Infrastructure.Extensions;
+using EdFi.Ods.AdminApi.Infrastructure.Helpers;
 using EdFi.Security.DataAccess.Contexts;
 using EdFi.Security.DataAccess.Models;
 using Microsoft.Extensions.Options;
@@ -21,6 +23,13 @@ public class GetAuthStrategiesQuery : IGetAuthStrategiesQuery
 {
     private readonly ISecurityContext _context;
     private readonly IOptions<AppSettings> _options;
+    private static readonly Dictionary<string, Expression<Func<AuthorizationStrategy, object>>> _orderByColumnAuthorizationStrategies =
+    new Dictionary<string, Expression<Func<AuthorizationStrategy, object>>>(StringComparer.OrdinalIgnoreCase)
+    {
+        { "name", x => x.AuthorizationStrategyName },
+        { "displayName", x => x.DisplayName },
+        { "id", x => x.AuthorizationStrategyId }
+    };
 
     public GetAuthStrategiesQuery(ISecurityContext context, IOptions<AppSettings> options)
     {
@@ -35,9 +44,12 @@ public class GetAuthStrategiesQuery : IGetAuthStrategiesQuery
 
     public List<AuthorizationStrategy> Execute(CommonQueryParams commonQueryParams)
     {
+        Expression<Func<AuthorizationStrategy, object>> columnToOrderBy = _orderByColumnAuthorizationStrategies.GetColumnToOrderBy(commonQueryParams.OrderBy);
+
         return _context.AuthorizationStrategies
-            .OrderBy(v => v.AuthorizationStrategyName)
-            .Paginate(commonQueryParams.Offset, commonQueryParams.Limit, _options)
-            .ToList();
+        .OrderByColumn(columnToOrderBy, commonQueryParams.IsDescending)
+        .Paginate(commonQueryParams.Offset, commonQueryParams.Limit, _options)
+        .ToList();
     }
 }
+

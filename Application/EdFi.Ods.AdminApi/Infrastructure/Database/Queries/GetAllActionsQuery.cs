@@ -3,8 +3,10 @@
 // The Ed-Fi Alliance licenses this file to you under the Apache License, Version 2.0.
 // See the LICENSE and NOTICES files in the project root for more information.
 
+using System.Linq.Expressions;
 using EdFi.Ods.AdminApi.Helpers;
 using EdFi.Ods.AdminApi.Infrastructure.Extensions;
+using EdFi.Ods.AdminApi.Infrastructure.Helpers;
 using EdFi.Security.DataAccess.Contexts;
 using Microsoft.Extensions.Options;
 using Action = EdFi.Security.DataAccess.Models.Action;
@@ -21,6 +23,14 @@ public class GetAllActionsQuery : IGetAllActionsQuery
 {
     private readonly ISecurityContext _securityContext;
     private readonly IOptions<AppSettings> _options;
+    private static readonly Dictionary<string, Expression<Func<Action, object>>> _orderByColumnActions =
+    new Dictionary<string, Expression<Func<Action, object>>>
+        (StringComparer.OrdinalIgnoreCase)
+    {
+        { "name", x => x.ActionName },
+        { "uri", x => x.ActionUri },
+        { "id", x => x.ActionId }
+    };
 
     public GetAllActionsQuery(ISecurityContext securityContext, IOptions<AppSettings> options)
     {
@@ -35,10 +45,13 @@ public class GetAllActionsQuery : IGetAllActionsQuery
 
     public IReadOnlyList<Action> Execute(CommonQueryParams commonQueryParams, int? id, string? name)
     {
+        Expression<Func<Action, object>> columnToOrderBy = _orderByColumnActions.GetColumnToOrderBy(commonQueryParams.OrderBy);
+
         return _securityContext.Actions
-            .Where(a => id == null || a.ActionId == id)
-            .Where(a => name == null || a.ActionName == name)
-            .Paginate(commonQueryParams.Offset, commonQueryParams.Limit, _options)
-            .ToList();
+        .Where(a => id == null || a.ActionId == id)
+        .Where(a => name == null || a.ActionName == name)
+        .OrderByColumn(columnToOrderBy, commonQueryParams.IsDescending)
+        .Paginate(commonQueryParams.Offset, commonQueryParams.Limit, _options)
+        .ToList();
     }
 }

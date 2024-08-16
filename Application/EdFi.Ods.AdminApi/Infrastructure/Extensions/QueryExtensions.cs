@@ -57,6 +57,23 @@ namespace EdFi.Ods.AdminApi.Infrastructure.Extensions
         }
 
         /// <summary>
+        /// Ordering the IQueryable base in the expression
+        /// </summary>
+        /// <typeparam name="T">Entity type</typeparam>
+        /// <param name="source">DBSet that contains the data</param>
+        /// <param name="orderBy">Expression function that contains the column to order</param>
+        /// <param name="isDescending">Indicate if it is descending</param>
+        /// <returns></returns>
+        public static IQueryable<T> OrderByColumn<T>(this IQueryable<T> source, Expression<Func<T, object>> orderBy, bool isDescending)
+        {
+            if (isDescending)
+                source = source.OrderByDescending(orderBy);
+            else
+                source = source.OrderBy(orderBy);
+            return source;
+        }
+
+        /// <summary>
         /// Apply pagination based on the offset and limit
         /// </summary>
         /// <typeparam name="T">Type of entity</typeparam>
