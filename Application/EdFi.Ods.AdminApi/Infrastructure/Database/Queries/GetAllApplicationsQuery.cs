@@ -14,7 +14,6 @@ using Microsoft.Extensions.Options;
 
 namespace EdFi.Ods.AdminApi.Infrastructure.Database.Queries;
 
-
 public interface IGetAllApplicationsQuery
 {
     IReadOnlyList<Application> Execute(CommonQueryParams commonQueryParams, int? id, string? applicationName, string? claimsetName);
@@ -28,7 +27,7 @@ public class GetAllApplicationsQuery : IGetAllApplicationsQuery
     new Dictionary<string, Expression<Func<Application, object>>>
         (StringComparer.OrdinalIgnoreCase)
     {
-        { "name", x => x.ApplicationName },
+        { "applicationName", x => x.ApplicationName },
         { "claimsetName", x => x.ClaimSetName },
         { "id", x => x.ApplicationId }
     };
