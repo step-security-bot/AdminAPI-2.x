@@ -27,8 +27,8 @@ public class GetProfilesQuery : IGetProfilesQuery
     new Dictionary<string, Expression<Func<Profile, object>>>
         (StringComparer.OrdinalIgnoreCase)
     {
-        { "name", x => x.ProfileName },
-        { "id", x => x.ProfileId }
+        { SortingColumns.DefaultNameColumn, x => x.ProfileName },
+        { SortingColumns.DefaultIdColumn, x => x.ProfileId }
     };
     public GetProfilesQuery(IUsersContext usersContext, IOptions<AppSettings> options)
     {

@@ -28,9 +28,9 @@ public class GetOdsInstancesQuery : IGetOdsInstancesQuery
     new Dictionary<string, Expression<Func<OdsInstance, object>>>
         (StringComparer.OrdinalIgnoreCase)
     {
-        { "name", x => x.Name },
-        { "instanceType", x => x.InstanceType },
-        { "id", x => x.OdsInstanceId }
+        { SortingColumns.DefaultNameColumn, x => x.Name },
+        { SortingColumns.OdsInstanceInstanceTypeColumn, x => x.InstanceType },
+        { SortingColumns.DefaultIdColumn, x => x.OdsInstanceId }
     };
 
     public GetOdsInstancesQuery(IUsersContext userContext, IOptions<AppSettings> options)

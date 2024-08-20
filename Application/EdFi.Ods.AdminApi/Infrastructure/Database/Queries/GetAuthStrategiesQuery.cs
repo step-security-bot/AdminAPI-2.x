@@ -26,9 +26,9 @@ public class GetAuthStrategiesQuery : IGetAuthStrategiesQuery
     private static readonly Dictionary<string, Expression<Func<AuthorizationStrategy, object>>> _orderByColumnAuthorizationStrategies =
     new Dictionary<string, Expression<Func<AuthorizationStrategy, object>>>(StringComparer.OrdinalIgnoreCase)
     {
-        { "name", x => x.AuthorizationStrategyName },
-        { "displayName", x => x.DisplayName },
-        { "id", x => x.AuthorizationStrategyId }
+        { SortingColumns.DefaultNameColumn, x => x.AuthorizationStrategyName },
+        { SortingColumns.AuthorizationStrategyDisplayNameColumn, x => x.DisplayName },
+        { SortingColumns.DefaultIdColumn, x => x.AuthorizationStrategyId }
     };
 
     public GetAuthStrategiesQuery(ISecurityContext context, IOptions<AppSettings> options)

@@ -29,9 +29,9 @@ public class GetOdsInstanceContextsQuery : IGetOdsInstanceContextsQuery
     new Dictionary<string, Expression<Func<OdsInstanceContext, object>>>
         (StringComparer.OrdinalIgnoreCase)
     {
-        { "contextKey", x => x.ContextKey },
-        { "contextValue", x => x.ContextValue },
-        { "id", x => x.OdsInstanceContextId }
+        { SortingColumns.OdsInstanceContextKeyColumn, x => x.ContextKey },
+        { SortingColumns.OdsInstanceContextValueColumn, x => x.ContextValue },
+        { SortingColumns.DefaultIdColumn, x => x.OdsInstanceContextId }
     };
     public GetOdsInstanceContextsQuery(IUsersContext usersContext, IOptions<AppSettings> options)
     {

@@ -4,7 +4,6 @@
 // See the LICENSE and NOTICES files in the project root for more information.
 
 using System.Linq.Expressions;
-using System.Numerics;
 using EdFi.Admin.DataAccess.Contexts;
 using EdFi.Admin.DataAccess.Models;
 using EdFi.Ods.AdminApi.Helpers;
@@ -30,15 +29,15 @@ public class GetVendorsQuery : IGetVendorsQuery
     new Dictionary<string, Expression<Func<Vendor, object>>>
         (StringComparer.OrdinalIgnoreCase)
     {
-        { "company", x => x.VendorName },
+        { SortingColumns.VendorCompanyColumn, x => x.VendorName },
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-        { "contactName", x => x.Users.FirstOrDefault().FullName },
+        { SortingColumns.VendorContactNameColumn, x => x.Users.FirstOrDefault().FullName },
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-        { "contactEmail", x => x.Users.FirstOrDefault().Email },
+        { SortingColumns.VendorContactEmailColumn, x => x.Users.FirstOrDefault().Email },
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
-        { "namespacePrefixes", x => string.Join(",", x.VendorNamespacePrefixes.Select(p=> p.NamespacePrefix)) },
-        { "id", x => x.VendorId }
+        { SortingColumns.VendorNamespacePrefixesColumn, x => string.Join(",", x.VendorNamespacePrefixes.Select(p=> p.NamespacePrefix)) },
+        { SortingColumns.DefaultIdColumn, x => x.VendorId }
     };
     public GetVendorsQuery(IUsersContext context, IOptions<AppSettings> options)
     {

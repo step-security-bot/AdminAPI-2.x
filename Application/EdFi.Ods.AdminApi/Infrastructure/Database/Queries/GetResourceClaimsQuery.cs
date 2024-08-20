@@ -27,12 +27,12 @@ public class GetResourceClaimsQuery : IGetResourceClaimsQuery
     new Dictionary<string, Expression<Func<EdFi.Security.DataAccess.Models.ResourceClaim, object>>>
         (StringComparer.OrdinalIgnoreCase)
     {
-        { "name", x => x.ResourceName },
-        { "parentName", x => x.ParentResourceClaim.ResourceName },
+        { SortingColumns.DefaultNameColumn, x => x.ResourceName },
+        { SortingColumns.ResourceClaimParentNameColumn, x => x.ParentResourceClaim.ResourceName },
 #pragma warning disable CS8603 // Possible null reference return.
-        { "parentId", x => x.ParentResourceClaimId },
+        { SortingColumns.ResourceClaimParentIdColumn, x => x.ParentResourceClaimId },
 #pragma warning restore CS8603 // Possible null reference return.
-        { "id", x => x.ResourceClaimId }
+        { SortingColumns.DefaultIdColumn, x => x.ResourceClaimId }
     };
     public GetResourceClaimsQuery(ISecurityContext securityContext, IOptions<AppSettings> options)
     {

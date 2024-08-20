@@ -28,9 +28,9 @@ public class GetAllClaimSetsQuery : IGetAllClaimSetsQuery
         (StringComparer.OrdinalIgnoreCase)
     {
 #pragma warning disable CS8603 // Possible null reference return.
-        { "name", x => x.Name },
+        { SortingColumns.DefaultNameColumn, x => x.Name },
 #pragma warning restore CS8603 // Possible null reference return.
-        { "id", x => x.Id }
+        { SortingColumns.DefaultIdColumn, x => x.Id }
     };
     public GetAllClaimSetsQuery(ISecurityContext securityContext, IOptions<AppSettings> options)
     {

@@ -28,9 +28,9 @@ public class GetOdsInstanceDerivativesQuery : IGetOdsInstanceDerivativesQuery
     new Dictionary<string, Expression<Func<OdsInstanceDerivative, object>>>
         (StringComparer.OrdinalIgnoreCase)
     {
-        { "derivativeType", x => x.DerivativeType },
-        { "odsInstanceId", x => x.OdsInstance.OdsInstanceId },
-        { "id", x => x.OdsInstanceDerivativeId }
+        { SortingColumns.OdsInstanceDerivativeTypeColumn, x => x.DerivativeType },
+        { SortingColumns.OdsInstanceDerivativeOdsInstanceIdColumn, x => x.OdsInstance.OdsInstanceId },
+        { SortingColumns.DefaultIdColumn, x => x.OdsInstanceDerivativeId }
     };
 
     public GetOdsInstanceDerivativesQuery(IUsersContext usersContext, IOptions<AppSettings> options)

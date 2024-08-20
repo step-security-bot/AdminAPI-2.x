@@ -27,9 +27,9 @@ public class GetAllActionsQuery : IGetAllActionsQuery
     new Dictionary<string, Expression<Func<Action, object>>>
         (StringComparer.OrdinalIgnoreCase)
     {
-        { "name", x => x.ActionName },
-        { "uri", x => x.ActionUri },
-        { "id", x => x.ActionId }
+        { SortingColumns.DefaultNameColumn, x => x.ActionName },
+        { SortingColumns.ActionUriColumn, x => x.ActionUri },
+        { SortingColumns.DefaultIdColumn, x => x.ActionId }
     };
 
     public GetAllActionsQuery(ISecurityContext securityContext, IOptions<AppSettings> options)

@@ -27,9 +27,9 @@ public class GetAllApplicationsQuery : IGetAllApplicationsQuery
     new Dictionary<string, Expression<Func<Application, object>>>
         (StringComparer.OrdinalIgnoreCase)
     {
-        { "applicationName", x => x.ApplicationName },
-        { "claimsetName", x => x.ClaimSetName },
-        { "id", x => x.ApplicationId }
+        { SortingColumns.ApplicationNameColumn, x => x.ApplicationName },
+        { SortingColumns.ApplicationClaimSetNameColumn, x => x.ClaimSetName },
+        { SortingColumns.DefaultIdColumn, x => x.ApplicationId }
     };
 
     public GetAllApplicationsQuery(IUsersContext context, IOptions<AppSettings> options)
