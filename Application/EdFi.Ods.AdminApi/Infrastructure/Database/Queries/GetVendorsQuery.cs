@@ -36,7 +36,7 @@ public class GetVendorsQuery : IGetVendorsQuery
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
         { SortingColumns.VendorContactEmailColumn, x => x.Users.FirstOrDefault().Email },
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
-        { SortingColumns.VendorNamespacePrefixesColumn, x => string.Join(",", x.VendorNamespacePrefixes.Select(p=> p.NamespacePrefix)) },
+        { SortingColumns.VendorNamespacePrefixesColumn, x => x.VendorNamespacePrefixes.OrderBy(p => p.NamespacePrefix).First().NamespacePrefix },
         { SortingColumns.DefaultIdColumn, x => x.VendorId }
     };
     public GetVendorsQuery(IUsersContext context, IOptions<AppSettings> options)
