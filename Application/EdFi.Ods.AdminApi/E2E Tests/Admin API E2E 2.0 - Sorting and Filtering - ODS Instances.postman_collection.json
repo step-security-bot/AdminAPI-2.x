@@ -704,7 +704,7 @@
 							"        else {\r",
 							"            return equal;\r",
 							"        }\r",
-							"    }).revese();\r",
+							"    }).reverse();\r",
 							"    pm.expect(results).to.eql(expectedSortedOrder);\r",
 							"});\r",
 							""
@@ -1102,6 +1102,7 @@
 					"                        let location = res.headers.get('Location');",
 					"                        let matches = location.match(/(\\d+)/);",
 					"                        let odsInstanceId = parseInt(matches[0], 10);",
+					"                        // odsInstancesToDelete.push({id: odsInstanceId, name: name, instanceType: instanceType});",
 					"                        odsInstancesToDelete.push(odsInstanceId);",
 					"                    });",
 					"                }",
