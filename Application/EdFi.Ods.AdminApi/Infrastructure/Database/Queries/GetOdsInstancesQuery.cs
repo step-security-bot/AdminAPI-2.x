@@ -9,6 +9,7 @@ using EdFi.Admin.DataAccess.Models;
 using EdFi.Ods.AdminApi.Helpers;
 using EdFi.Ods.AdminApi.Infrastructure.Extensions;
 using EdFi.Ods.AdminApi.Infrastructure.Helpers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace EdFi.Ods.AdminApi.Infrastructure.Database.Queries;
@@ -28,7 +29,7 @@ public class GetOdsInstancesQuery : IGetOdsInstancesQuery
     new Dictionary<string, Expression<Func<OdsInstance, object>>>
         (StringComparer.OrdinalIgnoreCase)
     {
-        { SortingColumns.DefaultNameColumn, x => x.Name },
+        { SortingColumns.DefaultNameColumn, x => EF.Functions.Collate(x.Name, "SQL_Latin1_General_CP1_CS_AS") },
         { SortingColumns.OdsInstanceInstanceTypeColumn, x => x.InstanceType },
         { SortingColumns.DefaultIdColumn, x => x.OdsInstanceId }
     };
