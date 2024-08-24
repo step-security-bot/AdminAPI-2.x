@@ -29,7 +29,7 @@ public class GetOdsInstancesQuery : IGetOdsInstancesQuery
     new Dictionary<string, Expression<Func<OdsInstance, object>>>
         (StringComparer.OrdinalIgnoreCase)
     {
-        { SortingColumns.DefaultNameColumn, x => EF.Functions.Collate(x.Name, "Latin1_General_bin") },
+        { SortingColumns.DefaultNameColumn, x => x.Name },
         { SortingColumns.OdsInstanceInstanceTypeColumn, x => x.InstanceType },
         { SortingColumns.DefaultIdColumn, x => x.OdsInstanceId }
     };
