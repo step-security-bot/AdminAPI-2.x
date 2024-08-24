@@ -25,24 +25,23 @@ public class GetVendorsQuery : IGetVendorsQuery
 {
     private readonly IUsersContext _context;
     private readonly IOptions<AppSettings> _options;
-    private static readonly Dictionary<string, Expression<Func<Vendor, object>>> _orderByColumnVendors =
-    new Dictionary<string, Expression<Func<Vendor, object>>>
-        (StringComparer.OrdinalIgnoreCase)
-    {
-        { SortingColumns.VendorCompanyColumn, x => x.VendorName },
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-        { SortingColumns.VendorContactNameColumn, x => x.Users.FirstOrDefault().FullName },
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-        { SortingColumns.VendorContactEmailColumn, x => x.Users.FirstOrDefault().Email },
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-        { SortingColumns.VendorNamespacePrefixesColumn, x => x.VendorNamespacePrefixes.OrderBy(p => p.NamespacePrefix).First().NamespacePrefix },
-        { SortingColumns.DefaultIdColumn, x => x.VendorId }
-    };
+    private readonly Dictionary<string, Expression<Func<Vendor, object>>> _orderByColumnVendors;
     public GetVendorsQuery(IUsersContext context, IOptions<AppSettings> options)
     {
         _context = context;
         _options = options;
+        var isSQLServerEngine = _options.Value.DatabaseEngine?.ToLowerInvariant() == DatabaseEngineEnum.SqlServer.ToLowerInvariant();
+        _orderByColumnVendors = new Dictionary<string, Expression<Func<Vendor, object>>>
+            (StringComparer.OrdinalIgnoreCase)
+        {
+            { SortingColumns.VendorCompanyColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.VendorName, DatabaseEngineEnum.SqlServerCollation) : x.VendorName },
+            #pragma warning disable CS8602 // Dereference of a possibly null reference.
+            { SortingColumns.VendorContactNameColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.Users.FirstOrDefault().FullName, DatabaseEngineEnum.SqlServerCollation) : x.Users.FirstOrDefault().FullName },
+            { SortingColumns.VendorContactEmailColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.Users.FirstOrDefault().Email, DatabaseEngineEnum.SqlServerCollation) : x.Users.FirstOrDefault().Email },
+            #pragma warning restore CS8602 // Dereference of a possibly null reference.
+            { SortingColumns.VendorNamespacePrefixesColumn, x => x.VendorNamespacePrefixes.OrderBy(p => p.NamespacePrefix).First().NamespacePrefix },
+            { SortingColumns.DefaultIdColumn, x => x.VendorId }
+        };
     }
 
     public List<Vendor> Execute()

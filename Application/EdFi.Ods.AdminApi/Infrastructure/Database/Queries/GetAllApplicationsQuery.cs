@@ -23,19 +23,20 @@ public class GetAllApplicationsQuery : IGetAllApplicationsQuery
 {
     private readonly IUsersContext _context;
     private readonly IOptions<AppSettings> _options;
-    private static readonly Dictionary<string, Expression<Func<Application, object>>> _orderByColumnApplications =
-    new Dictionary<string, Expression<Func<Application, object>>>
-        (StringComparer.OrdinalIgnoreCase)
-    {
-        { SortingColumns.ApplicationNameColumn, x => x.ApplicationName },
-        { SortingColumns.ApplicationClaimSetNameColumn, x => x.ClaimSetName },
-        { SortingColumns.DefaultIdColumn, x => x.ApplicationId }
-    };
+    private readonly Dictionary<string, Expression<Func<Application, object>>> _orderByColumnApplications;
 
     public GetAllApplicationsQuery(IUsersContext context, IOptions<AppSettings> options)
     {
         _context = context;
         _options = options;
+        var isSQLServerEngine = _options.Value.DatabaseEngine?.ToLowerInvariant() == DatabaseEngineEnum.SqlServer.ToLowerInvariant();
+        _orderByColumnApplications = new Dictionary<string, Expression<Func<Application, object>>>
+        (StringComparer.OrdinalIgnoreCase)
+        {
+            { SortingColumns.ApplicationNameColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.ApplicationName, DatabaseEngineEnum.SqlServerCollation) : x.ApplicationName },
+            { SortingColumns.ApplicationClaimSetNameColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.ClaimSetName, DatabaseEngineEnum.SqlServerCollation) : x.ClaimSetName },
+            { SortingColumns.DefaultIdColumn, x => x.ApplicationId }
+        };
     }
 
     public IReadOnlyList<Application> Execute(CommonQueryParams commonQueryParams, int? id, string? applicationName, string? claimsetName)

@@ -8,6 +8,7 @@ using EdFi.Ods.AdminApi.Helpers;
 using EdFi.Ods.AdminApi.Infrastructure.Extensions;
 using EdFi.Ods.AdminApi.Infrastructure.Helpers;
 using EdFi.Security.DataAccess.Contexts;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Action = EdFi.Security.DataAccess.Models.Action;
 
@@ -23,19 +24,20 @@ public class GetAllActionsQuery : IGetAllActionsQuery
 {
     private readonly ISecurityContext _securityContext;
     private readonly IOptions<AppSettings> _options;
-    private static readonly Dictionary<string, Expression<Func<Action, object>>> _orderByColumnActions =
-    new Dictionary<string, Expression<Func<Action, object>>>
-        (StringComparer.OrdinalIgnoreCase)
-    {
-        { SortingColumns.DefaultNameColumn, x => x.ActionName },
-        { SortingColumns.ActionUriColumn, x => x.ActionUri },
-        { SortingColumns.DefaultIdColumn, x => x.ActionId }
-    };
+    private readonly Dictionary<string, Expression<Func<Action, object>>> _orderByColumnActions;
 
     public GetAllActionsQuery(ISecurityContext securityContext, IOptions<AppSettings> options)
     {
         _securityContext = securityContext;
         _options = options;
+        var isSQLServerEngine = _options.Value.DatabaseEngine?.ToLowerInvariant() == DatabaseEngineEnum.SqlServer.ToLowerInvariant();
+        _orderByColumnActions = new Dictionary<string, Expression<Func<Action, object>>>
+        (StringComparer.OrdinalIgnoreCase)
+        {
+            { SortingColumns.DefaultNameColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.ActionName, DatabaseEngineEnum.SqlServerCollation) : x.ActionName },
+            { SortingColumns.ActionUriColumn, x => x.ActionUri },
+            { SortingColumns.DefaultIdColumn, x => x.ActionId }
+        };
     }
 
     public IReadOnlyList<Action> Execute()
