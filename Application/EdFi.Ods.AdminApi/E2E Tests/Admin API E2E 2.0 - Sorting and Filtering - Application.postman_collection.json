@@ -1122,7 +1122,7 @@
 					"\r",
 					"function deleteOdsInstance() {\r",
 					"    let odsInstanceToDelete = pm.collectionVariables.get(\"ODSINSTANCETODELETE\").split(\",\");\r",
-					"    for (let i = 0; i < claimsetsToDelete.length; i++) {\r",
+					"    for (let i = 0; i < odsInstanceToDelete.length; i++) {\r",
 					"        deleteODSInstanceById(odsInstanceToDelete);\r",
 					"    }\r",
 					"}\r",
