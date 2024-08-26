@@ -9,6 +9,7 @@ using EdFi.Admin.DataAccess.Models;
 using EdFi.Ods.AdminApi.Helpers;
 using EdFi.Ods.AdminApi.Infrastructure.Extensions;
 using EdFi.Ods.AdminApi.Infrastructure.Helpers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace EdFi.Ods.AdminApi.Infrastructure.Database.Queries;
@@ -23,17 +24,18 @@ public class GetProfilesQuery : IGetProfilesQuery
 {
     private readonly IUsersContext _usersContext;
     private readonly IOptions<AppSettings> _options;
-    private static readonly Dictionary<string, Expression<Func<Profile, object>>> _orderByColumnProfiles =
-    new Dictionary<string, Expression<Func<Profile, object>>>
-        (StringComparer.OrdinalIgnoreCase)
-    {
-        { SortingColumns.DefaultNameColumn, x => x.ProfileName },
-        { SortingColumns.DefaultIdColumn, x => x.ProfileId }
-    };
+    private readonly Dictionary<string, Expression<Func<Profile, object>>> _orderByColumnProfiles;
     public GetProfilesQuery(IUsersContext usersContext, IOptions<AppSettings> options)
     {
         _usersContext = usersContext;
         _options = options;
+        var isSQLServerEngine = _options.Value.DatabaseEngine?.ToLowerInvariant() == DatabaseEngineEnum.SqlServer.ToLowerInvariant();
+        _orderByColumnProfiles = new Dictionary<string, Expression<Func<Profile, object>>>
+            (StringComparer.OrdinalIgnoreCase)
+        {
+            { SortingColumns.DefaultNameColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.ProfileName, DatabaseEngineEnum.SqlServerCollation) : x.ProfileName },
+            { SortingColumns.DefaultIdColumn, x => x.ProfileId }
+        };
     }
 
     public List<Profile> Execute()
