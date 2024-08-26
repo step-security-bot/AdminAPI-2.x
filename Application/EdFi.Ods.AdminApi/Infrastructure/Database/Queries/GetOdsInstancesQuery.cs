@@ -35,8 +35,8 @@ public class GetOdsInstancesQuery : IGetOdsInstancesQuery
         _orderByColumnOds = new Dictionary<string, Expression<Func<OdsInstance, object>>>
                     (StringComparer.OrdinalIgnoreCase)
                 {
-                    { SortingColumns.DefaultNameColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.Name, "Latin1_General_BIN2") : x.Name },
-                    { SortingColumns.OdsInstanceInstanceTypeColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.InstanceType, "Latin1_General_BIN2") : x.InstanceType },
+                    { SortingColumns.DefaultNameColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.Name, DatabaseEngineEnum.SqlServerCollation) : x.Name },
+                    { SortingColumns.OdsInstanceInstanceTypeColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.InstanceType, DatabaseEngineEnum.SqlServerCollation) : x.InstanceType },
                     { SortingColumns.DefaultIdColumn, x => x.OdsInstanceId }
                 };
     }

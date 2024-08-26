@@ -9,6 +9,7 @@ using EdFi.Ods.AdminApi.Infrastructure.Extensions;
 using EdFi.Ods.AdminApi.Infrastructure.Helpers;
 using EdFi.Security.DataAccess.Contexts;
 using EdFi.Security.DataAccess.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace EdFi.Ods.AdminApi.Infrastructure.Database.Queries;
@@ -23,18 +24,20 @@ public class GetAuthStrategiesQuery : IGetAuthStrategiesQuery
 {
     private readonly ISecurityContext _context;
     private readonly IOptions<AppSettings> _options;
-    private static readonly Dictionary<string, Expression<Func<AuthorizationStrategy, object>>> _orderByColumnAuthorizationStrategies =
-    new Dictionary<string, Expression<Func<AuthorizationStrategy, object>>>(StringComparer.OrdinalIgnoreCase)
-    {
-        { SortingColumns.DefaultNameColumn, x => x.AuthorizationStrategyName },
-        { SortingColumns.AuthorizationStrategyDisplayNameColumn, x => x.DisplayName },
-        { SortingColumns.DefaultIdColumn, x => x.AuthorizationStrategyId }
-    };
-
+    private readonly Dictionary<string, Expression<Func<AuthorizationStrategy, object>>> _orderByColumnAuthorizationStrategies;
     public GetAuthStrategiesQuery(ISecurityContext context, IOptions<AppSettings> options)
     {
         _context = context;
         _options = options;
+        var isSQLServerEngine = _options.Value.DatabaseEngine?.ToLowerInvariant() == DatabaseEngineEnum.SqlServer.ToLowerInvariant();
+
+        _orderByColumnAuthorizationStrategies = new Dictionary<string, Expression<Func<AuthorizationStrategy, object>>>
+            (StringComparer.OrdinalIgnoreCase)
+        {
+            { SortingColumns.DefaultNameColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.AuthorizationStrategyName, DatabaseEngineEnum.SqlServerCollation) : x.AuthorizationStrategyName },
+            { SortingColumns.AuthorizationStrategyDisplayNameColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.DisplayName, DatabaseEngineEnum.SqlServerCollation) : x.DisplayName },
+            { SortingColumns.DefaultIdColumn, x => x.AuthorizationStrategyId }
+        };
     }
 
     public List<AuthorizationStrategy> Execute()

@@ -24,19 +24,20 @@ public class GetOdsInstanceDerivativesQuery : IGetOdsInstanceDerivativesQuery
 {
     private readonly IUsersContext _usersContext;
     private readonly IOptions<AppSettings> _options;
-    private static readonly Dictionary<string, Expression<Func<OdsInstanceDerivative, object>>> _orderByColumnOds =
-    new Dictionary<string, Expression<Func<OdsInstanceDerivative, object>>>
-        (StringComparer.OrdinalIgnoreCase)
-    {
-        { SortingColumns.OdsInstanceDerivativeTypeColumn, x => x.DerivativeType },
-        { SortingColumns.OdsInstanceDerivativeOdsInstanceIdColumn, x => x.OdsInstance.OdsInstanceId },
-        { SortingColumns.DefaultIdColumn, x => x.OdsInstanceDerivativeId }
-    };
-
+    private readonly Dictionary<string, Expression<Func<OdsInstanceDerivative, object>>> _orderByColumnOds;
     public GetOdsInstanceDerivativesQuery(IUsersContext usersContext, IOptions<AppSettings> options)
     {
         _usersContext = usersContext;
         _options = options;
+        var isSQLServerEngine = _options.Value.DatabaseEngine?.ToLowerInvariant() == DatabaseEngineEnum.SqlServer.ToLowerInvariant();
+        _orderByColumnOds = new Dictionary<string, Expression<Func<OdsInstanceDerivative, object>>>
+            (StringComparer.OrdinalIgnoreCase)
+        {
+            { SortingColumns.OdsInstanceDerivativeTypeColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.DerivativeType, DatabaseEngineEnum.SqlServerCollation) : x.DerivativeType },
+            { SortingColumns.OdsInstanceDerivativeOdsInstanceIdColumn, x => x.OdsInstance.OdsInstanceId },
+            { SortingColumns.DefaultIdColumn, x => x.OdsInstanceDerivativeId }
+        };
+
     }
 
     public List<OdsInstanceDerivative> Execute()
