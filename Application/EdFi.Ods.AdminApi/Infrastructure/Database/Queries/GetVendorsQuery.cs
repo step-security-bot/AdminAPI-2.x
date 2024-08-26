@@ -39,7 +39,7 @@ public class GetVendorsQuery : IGetVendorsQuery
             { SortingColumns.VendorContactNameColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.Users.FirstOrDefault().FullName, DatabaseEngineEnum.SqlServerCollation) : x.Users.FirstOrDefault().FullName },
             { SortingColumns.VendorContactEmailColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.Users.FirstOrDefault().Email, DatabaseEngineEnum.SqlServerCollation) : x.Users.FirstOrDefault().Email },
             #pragma warning restore CS8602 // Dereference of a possibly null reference.
-            { SortingColumns.VendorNamespacePrefixesColumn, x => x.VendorNamespacePrefixes.OrderBy(p => p.NamespacePrefix).First().NamespacePrefix },
+            { SortingColumns.VendorNamespacePrefixesColumn, x => isSQLServerEngine ? EF.Functions.Collate(x.VendorNamespacePrefixes.OrderBy(p => p.NamespacePrefix).First().NamespacePrefix, DatabaseEngineEnum.SqlServerCollation) : x.VendorNamespacePrefixes.OrderBy(p => p.NamespacePrefix).First().NamespacePrefix },
             { SortingColumns.DefaultIdColumn, x => x.VendorId }
         };
     }
